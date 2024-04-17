@@ -1,6 +1,6 @@
-# Attention-gated Residual U-Net for Subacute Ischemic Stroke Lesion Segmentation on Public Dataset
+# AG-UResNet50: Attention-gated Residual U-Net for Subacute Ischemic Stroke Lesion Segmentation
 
-Implementation of a U-Net using (i) ResNet-50 backbone in its encoder path, (ii) attention gates on skip connections, and (iii) Leaky ReLU activation on its convolution blocks in the decoding path, in order to perform subacute ischemic stroke lesion segmentation on MRI data.
+Implementation of a U-Net using (i) ResNet50 as encoder, (ii) attention gates on skip connections, and (iii) Leaky ReLU activation on deconvolution blocks, in order to perform subacute ischemic stroke lesion segmentation on MRI data.
 
 ## Environment
 
@@ -14,11 +14,11 @@ torchvision = 0.15
 
 File architecture:
 ```
-net/att-unet.py         Implementation of attention-based U-Net
+net/att-unet.py         Implementation of attention-gated U-Net
 net/attention.py        Implementation of the attention gate
-net/resnet.py           Implementation of ResNet-50 backbone
+net/resnet.py           Implementation of ResNet50
 
-utils/data_prep.py      Script for augmenting ISLES2015 SISS data
+utils/data_prep.py      Script for augmenting ISLES 2015 SISS data
 utils/dataloader.py     Script for defining Dataloader class
 utils/loss.py           Script for defining loss functions & performance metrics
 
