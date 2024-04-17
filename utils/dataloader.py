@@ -12,17 +12,17 @@ class ISLES2015SISSDataset(Dataset):
         self.data_root = data_root
         self.test = test
         self.files = os.listdir(data_root)  # list containing names of all files in data_root directory
-        self.images = self.files  # list containing names of all image files in data_root directory - redundant
+        self.images = self.files  # list containing names strictly the image files
         self.lists = []
 
-        file_path = '/dbfs/tcdh-isles/lists_export.csv'  # path to csv file containing lists of image file names
+        file_path = '/dbfs/tcdh-isles/lists_export.csv'  # path to csv containing lists of image file names
         with open(file_path, 'r') as file:
             reader = csv.reader(file)
             for row in reader:
                 self.lists.append(row)
                 
-        self.DWI_Input = self.lists[0]  # get list of DWI images in ISLES2015 SISS dataset
-        self.expert = self.lists[4]  # get list of corresponding label images
+        self.DWI_Input = self.lists[0]  # get list of DWI images in ISLES 2015 SISS
+        self.expert = self.lists[4]  # get list of corresponding labelled images
     
     def __len__(self):
         return len(self.DWI_Input)  # return length of dataset
@@ -38,12 +38,12 @@ class ISLES2015SISSDataset(Dataset):
         expert_mask = Image.open(expert_mask_path)
 
         transform = transforms.Compose([
-            transforms.ToTensor()])  # define data transformation pipeline which simply converts PIL Image or np array to PyTorch tensor
+            transforms.ToTensor()])  # define pipeline which converts PIL Image or np array to PyTorch tensor
 
         DWI_image_tensor = transform(DWI_image)
         expert_mask_tensor = transform(expert_mask)
         
-        return DWI_image_tensor, expert_mask_tensor  # return pairs of DWI images and their corresponding expert masks in ISLES2015 SISS dataset
+        return DWI_image_tensor, expert_mask_tensor  # return pairs of DWI images and their corresponding expert masks
 
     def get_img_size(self):
         first_DWI_image = self.DWI_Input[0]
