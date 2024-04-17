@@ -12,7 +12,7 @@ torchvision = 0.15
 
 ## Notes
 
-File architecture:
+Repository structure:
 ```
 net/att-unet.py         Implementation of attention-gated U-Net
 net/attention.py        Implementation of the attention gate
