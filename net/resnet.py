@@ -14,18 +14,18 @@ class ConvBlock(nn.Module):
             nn.Conv2d(mid_channel, mid_channel * 4, 1, 1, bias=False),
             nn.BatchNorm2d(mid_channel * 4),
             nn.ReLU(inplace=False)
-        )  # define sequence of convolutional layers
+        ) 
         self.stride = stride
         self.dSampScheme = dSampScheme
         self.out_ReLU = nn.ReLU(inplace=False)
 
     def forward(self, input):
-        identity = input  # store input tensor as identity tensor
-        out = self.convs(input)  # apply sequential convolutional layers to the input to obtain output tensor "out"
+        identity = input
+        out = self.convs(input)
         
         if self.dSampScheme is not None:  # if downsampling scheme provided
-            identity = self.dSampScheme(identity)  # it is applied to the identity tensor
-        out += identity  # add output tensor to identity tensor to form the residual connection
+            identity = self.dSampScheme(identity)  # apply it to identity tensor
+        out += identity  # add output tensor to identity tensor to form residual connection
         
         return self.out_ReLU(out)
     
