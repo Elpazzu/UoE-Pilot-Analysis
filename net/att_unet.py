@@ -50,13 +50,11 @@ class AttUNet(nn.Module):
         else:
             raise("Invalid type {}".format(self.backbone))
         
-        # Up Sampling Blocks
         self.upSamp1 = UpSampBlock(self.downList[-1], self.downList[-2], self.dropRate, attention)
         self.upSamp2 = UpSampBlock(self.downList[-2], self.downList[-3], self.dropRate, attention)
         self.upSamp3 = UpSampBlock(self.downList[-3], self.downList[-4], self.dropRate, attention)
         self.upSamp4 = UpSampBlock(self.downList[-4], self.downList[-5], self.dropRate, attention)
         
-        # Generate final output
         self.outBlock = nn.Sequential(
             nn.Conv2d(self.downList[0], 1, 3, 1, padding=1),
             nn.Sigmoid()
