@@ -1,4 +1,3 @@
-# Databricks notebook source
 import os
 import argparse
 import csv
@@ -43,11 +42,11 @@ if not os.path.exists(log_root):
 data_root = "/dbfs/tcdh-isles/All_Images/Augmented_v2"  # specify DBFS path of input training dataset
 dataset = ISLES2015SISSDataset(data_root)
 train_dataset, val_dataset = torch.utils.data.random_split(dataset, [int(0.8*len(dataset)), len(dataset)-int(0.8*len(dataset))])
-H, W = dataset.get_img_size()  # extract dimensions of input images in training set
+H, W = dataset.get_img_size()  # extract dimensions of input training images
 
 # Construct net
-#net = AttUNet(net_type, is_train=True, attention=attention).to(device)  # for training network with attention
-net = AttUNet(net_type, is_train=True, attention=False).to(device)  # for training network without attention
+#net = AttUNet(net_type, is_train=True, attention=attention).to(device)  # for training with attention
+net = AttUNet(net_type, is_train=True, attention=False).to(device)  # for training without attention
 
 print("Traning Session {} \nBrief:\nBackbone_type:{} | batch_size:{} | lr:{} | model_root:{} | Log root:{}".format(train_tag, net_type, batch_size, learning_rate, model_root, log_root))
 print("img_size:{}*{} | trainset size:{}".format(W, H, len(dataset)))
@@ -59,8 +58,8 @@ opt = optim.Adam(net.parameters(), lr=learning_rate)
 scheduler = ReduceLROnPlateau(opt, mode="min", patience=4, verbose=True)  # learning rate adjustment on validation loss
 
 # Loss function
-loss_bce = nn.BCELoss()  # BCE loss function
-loss_dice = BinaryDiceLoss()  # Dice loss function
+loss_bce = nn.BCELoss()  # BCE loss
+loss_dice = BinaryDiceLoss()  # Dice loss
 
 # Performance metrics
 metrics = MetricsTracker(train_tag, log_root)  # create instance of imported MetricsTracker class
@@ -70,8 +69,8 @@ k_folds = 5
 batch_size = 16
 weight_bce = 0.3  # assign weight to BCE loss during training
 weight_dice = 0.7  # assign weight to Dice loss during training
-min_epoch_loss = np.inf  # used to track the minimum loss observed across epochs during training
-min_epoch = 0  # used to store number of the epoch with the minimum loss observed during training, initialized at 0
+min_epoch_loss = np.inf  # to track the minimum loss observed across epochs during training
+min_epoch = 0  # to store number of the epoch with the minimum loss observed during training, initialized at 0
 
 for fold in range(k_folds):
     # Initialize data loaders for training and validation sets for current fold
@@ -148,7 +147,3 @@ for fold in range(k_folds):
         
         scheduler.step(avg_val_loss)
         torch.cuda.empty_cache()
-
-# COMMAND ----------
-
-
