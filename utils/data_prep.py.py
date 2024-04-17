@@ -134,15 +134,15 @@ for item in image_list_input_DWI_unpr:
         
 image_list_Flair_input = []
 for item in image_list_input_Flair_unpr:
-    image_list_Flair_input.append(item) # for test set
+    image_list_Flair_input.append(item)
 
 image_list_T1_input = []
 for item in image_list_input_T1_unpr:
-    image_list_T1_input.append(item) # for test set
+    image_list_T1_input.append(item)
 
 image_list_T2_input = []
 for item in image_list_input_T2_unpr:
-    image_list_T2_input.append(item) # for test set
+    image_list_T2_input.append(item)
 
 print(len(image_list_DWI_input), image_list_DWI_input[:3])
 print(len(image_list_Flair_input), image_list_Flair_input[:3])
@@ -261,5 +261,3 @@ for filename in image_files:
     Image.fromarray((img_normalized * 255).astype(np.uint8)).save(normalized_img_path)
 
 # COMMAND ----------
-
-
