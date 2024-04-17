@@ -2,15 +2,13 @@
 
 Implementation of a U-Net using (i) ResNet50 as encoder, (ii) attention gates on skip connections, and (iii) Leaky ReLU activation on deconvolution blocks, in order to perform subacute ischemic stroke lesion segmentation on MRI data.
 
-## Environment
+Environment
 
 ```
 python = 3.9
 pytorch = 2.0
 torchvision = 0.15
 ```
-
-## Notes
 
 Repository structure:
 ```
